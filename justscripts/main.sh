@@ -1,9 +1,23 @@
 #!/usr/bin/env sh
 # shellcheck disable=SC2015
 # shellcheck disable=SC2120
+# shellcheck disable=SC1091
 . justscripts/env.sh
 . justscripts/setup.sh
 . justscripts/shell.sh
+
+_ENV_FLAG_FILES=0
+for f in DEV PRE PRO
+do
+    if [ -e "$f" ]; then
+        ENV="$(echo $f | tr '[:upper:]' '[:lower:]')"
+        _ENV_FLAG_FILES=$((_ENV_FLAG_FILES + 1))
+    fi
+done
+if [ "$_ENV_FLAG_FILES" -ne 1 ]; then
+    echo_highlight "Found ${_ENV_FLAG_FILES} env configuration files. Create one of those files: DEV, PRE or PRO to set deployment environment."
+    return 1
+fi
 
 init_project(){
     check_if_name_set "verbose"
