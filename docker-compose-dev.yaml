@@ -1,0 +1,33 @@
+services:
+  # Images
+  cashflow-dashboard-image:
+    image: cashflow-dashboard-image:${IMAGE_TAG}
+    build:
+      context: .
+      dockerfile: _project/py-slim.dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE}
+        PIP_VERSION: ${PIP_VERSION}
+        UV_VERSION: ${UV_VERSION}
+        UID: ${UID:-10001}
+        GUID: ${GUID:-10001}
+        IS_PROD: "false"
+
+  cashflow-dashboard-dev-helper: &base-container
+    hostname: cashflow-dashboard-dev-helper
+    image: cashflow-dashboard-image:${IMAGE_TAG}
+    user: root
+    command: sleep infinity
+    tty: true
+    stdin_open: true
+    environment:
+      HISTFILE: "/opt/cashflow/.bash_history"
+    volumes:
+    # dev-only
+      - ./.local/.bash_history:/opt/cashflow/.bash_history:Z
+      - ./playground:/opt/cashflow/playground:Z
+
+
+networks:
+  default:
+    name: cashflow

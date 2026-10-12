@@ -55,6 +55,15 @@ create_file_if_it_does_not_exist(){
     [ ! -f "${FILENAME}" ] && touch "${FILENAME}" && echo "File ${FILENAME} created." || echo
 }
 
+image_version(){
+  if [ "$(is_git_working_tree_clean)" = "true" ]
+  then
+    echo "$(get_current_commit_utc_time)-$(get_current_commit_short_sha)"
+  else
+    echo "$(get_current_commit_utc_time)-$(get_current_commit_short_sha)-WIP-$(date +"%Y-%m-%d-%H-%M-%S")"
+  fi
+}
+
 open_in_browser(){
   FILE="${1:?}"
   if [ -f "${FILE}" ]

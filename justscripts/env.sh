@@ -16,9 +16,13 @@ create_or_update_dotenv(){
         echo_title "Creating .env file..."
         echo_default "Creating new .env file from .env.template file..."
         cp .env.template .env
+        store_variable_in_dotenv_file "UID" "$(id -u)"
+        store_variable_in_dotenv_file "GUID" "$(id -g)"
     else
         echo_title "Updating .env file..."
         rm -f .local/.env.backup && cp .env .local/.env.backup && rm -f .env && cp .env.template .env
+        restore_variable_in_dotenv_file UID
+        restore_variable_in_dotenv_file GUID
     fi
     echo_default "Storing .env.template md5 sum..."
     sed_inplace "s|^DOTENV_TEMPLATE_MD5=.*$|DOTENV_TEMPLATE_MD5=${REAL_DOTENV_TEMPLATE_MD5}|g" .env
