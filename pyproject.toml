@@ -1,5 +1,5 @@
 [project]
-name = "<project_name>"
+name = "cashflow_dashboard"
 version = "0.1.0"
 description = "<description>"
 authors = [{name="ZiveRael", email="papeernscal@gmail.com"}]
@@ -7,11 +7,11 @@ readme = "README.md"
 dependencies = [
     "ipykernel==6.31.0", # Vs-code extension bug https://stackoverflow.com/questions/79788502/jupyter-notebook-extension-visual-studio-code-stuck-connecting-to-kernel in 7.1.0
     "pydantic==2.12.5",
-    "tqdm==4.67.1",
-    "typer==0.21.1",
-    "scalene==2.1.0",
+    "tqdm==4.67.3",
+    "typer==0.24.1",
+    "scalene==2.2.1",
 ]
-requires-python=">= 3.12, <3.13"
+requires-python=">= 3.13, <3.14"
 
 [tool.uv]
 package = true
@@ -31,11 +31,11 @@ dev = [
 ]
 
 [project.scripts]
-main = "<project_name>.main:app"
+main = "cashflow_dashboard.main:app"
 
 [tool.mypy]
 python_version = "3.12"
-files = ["<project_name>", "tests"]
+files = ["cashflow_dashboard", "tests"]
 
 plugins = [
     "pydantic.mypy",

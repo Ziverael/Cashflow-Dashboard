@@ -1,0 +1,14 @@
+services:
+  # Images
+  cashflow-dashboard-image:
+    image: cashflow-dashboard-image:${IMAGE_TAG}
+    build:
+      context: .
+      dockerfile: _project/py-slim.dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE}
+        PIP_VERSION: ${PIP_VERSION}
+        UV_VERSION: ${UV_VERSION}
+        UID: ${UID:-10001}
+        GUID: ${GUID:-10001}
+        IS_PROD: "true"
